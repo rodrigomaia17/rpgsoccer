@@ -19,6 +19,8 @@ namespace RPGSoccer.Dominio.Dominio
             Equipe = equipe;
             AtributosJogador = atributosJogador;
         }
+
+    
     }
 
 }

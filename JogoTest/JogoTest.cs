@@ -87,26 +87,12 @@ namespace JogoTest
             var jogo = new Jogo(timeA, EsquemaTatico.QuatroQuatroDois, timeB, EsquemaTatico.QuatroQuatroDois,
                 Equipe.EquipeA);
 
-            var jogadoresEquipeACount = 0;
-            var jogadoresEquipeBCount = 0;
-            var bolas = 0;
 
-            foreach (var espaçoNoCampo in jogo.Campo.SelectMany(linha => linha))
-            {
-                if (espaçoNoCampo.BolaEstaAqui)
-                    bolas++;
+       
 
-                if(espaçoNoCampo.TipoConteudo == TipoConteudo.Jogador )
-                    if (((Jogador) espaçoNoCampo.Conteudo).Equipe == Equipe.EquipeA)
-                        jogadoresEquipeACount++;
-                    else if( ((Jogador)espaçoNoCampo.Conteudo).Equipe == Equipe.EquipeB)
-                        jogadoresEquipeBCount++;
-            }
-
-            Assert.AreEqual(6000,jogo.Campo.SelectMany(linha => linha).Count());
-            Assert.AreEqual(11,jogadoresEquipeACount);
-            Assert.AreEqual(11,jogadoresEquipeBCount);
-            Assert.AreEqual(1,bolas);
+            Assert.IsTrue(jogo.JogadoresA.All(j => j.Localizacao != null));
+            Assert.IsTrue(jogo.JogadoresB.All(j => j.Localizacao != null));
+            Assert.IsTrue(jogo.Bola.Localizacao != null);
         }
     }
 }

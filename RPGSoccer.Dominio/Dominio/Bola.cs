@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPGSoccer.Dominio.Dominio
 {
-    public abstract class OcupaEspaço
+    public class Bola : OcupaEspaço
     {
-        public Localizacao Localizacao { get; set; }
-
     }
 }

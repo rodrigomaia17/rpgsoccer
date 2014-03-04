@@ -23,6 +23,8 @@ namespace RPGSoccer.Console
             _jogo = new Jogo(jogA, EsquemaTatico.QuatroQuatroDois, jogB, EsquemaTatico.QuatroQuatroDois,
                 Equipe.EquipeA);
 
+            NovaRodada(Equipe.EquipeA);
+
           
         }
 
@@ -67,7 +69,11 @@ namespace RPGSoccer.Console
         private void AcaoPasse()
         {
             ParametrosPasse parametrosPasse = EscolheOpcaoPasse();
-            _jogo.AcaoPasse(parametrosPasse);
+            var retorno = _jogo.AcaoPasse(parametrosPasse);
+
+            if(retorno.Sucesso)
+                System.Console.WriteLine("Sucesso No Passe");
+            System.Console.ReadKey();
 
         }
 
@@ -78,7 +84,7 @@ namespace RPGSoccer.Console
             int entrada;
             do
             {
-                entrada = System.Console.Read();
+                entrada = int.Parse(System.Console.ReadLine() ?? "-1");
                 if (entrada > 0 && entrada < 12 )
                 {
                     retorno.JogadorDestino = entrada;
@@ -94,7 +100,7 @@ namespace RPGSoccer.Console
             System.Console.WriteLine("1 - Rasteiro, 2 - Meia Altura, 3 - Pelo Alto");
             do
             {
-                entrada = System.Console.Read();
+                entrada = int.Parse(System.Console.ReadLine() ?? "-1");
                 if (entrada > 0 && entrada < 4)
                 {
                     if(entrada == 1)
@@ -120,7 +126,7 @@ namespace RPGSoccer.Console
             int entrada;
             do
             {
-                entrada = System.Console.Read();
+                entrada = int.Parse(System.Console.ReadLine() ?? "-1");
                 if (opcoesDisponiveis.Any(o => o.Key == entrada))
                 {
                     retorno = opcoesDisponiveis.First(o => o.Key == entrada).Value;

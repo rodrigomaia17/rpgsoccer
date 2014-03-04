@@ -15,28 +15,32 @@ namespace RPGSoccer.Console
     {
         public static void DesenhaCampo(this Jogo jogo)
         {
-            for(var i = 0 ; i < 100; i++)
-                System.Console.Write("_");
-            for (int i = 0; i < jogo.Campo.Count; i++)
-            {
-                var linha = jogo.Campo[i];
-               
+            var jogadores = jogo.JogadoresA.ToList();
+            jogadores.AddRange(jogo.JogadoresB);
 
+            var arr = new List<string>(60);
+            for(var i = 1 ; i < 101; i++)
+                System.Console.Write("_");
+            for (int i = 1; i < 61; i++)
+            {
                 System.Console.Write("\n|");
-                for (int j = 0; j < linha.Count; j++)
+                for (int j = 1; j < 101; j++)
                 {
-                    var coluna = linha[j];
-                    if (coluna.TipoConteudo == TipoConteudo.EspacoVazio)
+                    var jogadorAqui = jogadores.FirstOrDefault(c => c.Localizacao.Equals(new Localizacao(i, j)));
+                    var bolaAqui = jogo.Bola.Localizacao.Equals(new Localizacao(i, j));
+                    if(jogadorAqui != null)
+                        if(bolaAqui)
+                            System.Console.Write((jogadorAqui).Numero + ".");
+                        else
+                            System.Console.Write((jogadorAqui).Numero);
+                    else if(bolaAqui)
+                        System.Console.WriteLine(".");
+                    else 
                         System.Console.Write(" ");
-                    else if (coluna.TipoConteudo == TipoConteudo.Jogador && !coluna.BolaEstaAqui)
-                        System.Console.Write(((Jogador)coluna.Conteudo).Numero);
-                    else if (coluna.TipoConteudo == TipoConteudo.Jogador && coluna.BolaEstaAqui)
-                        System.Console.Write(((Jogador)coluna.Conteudo).Numero + ".");
+                 
                 }
                 System.Console.Write("|");
-                if(linha.All(c => c.TipoConteudo == TipoConteudo.EspacoVazio) )  //Se essa linha foi toda vazia, e a proxima também é, pula a proxima (economizar altura)
-                    if (i < jogo.Campo.Count - 1 &&
-                        jogo.Campo[i + 1].All(c => c.TipoConteudo == TipoConteudo.EspacoVazio))
+                if(jogadores.All(c => c.Localizacao.Linha != i) && jogadores.All(c => c.Localizacao.Linha != i+1) )  //Se essa linha foi toda vazia, e a proxima também é, pula a proxima (economizar altura)
                         i++;
             }
         
